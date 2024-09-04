@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome User</h1>
+    </div>
+
+    <div class="text-center container">
+   
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                   
+                    <th scope="col">Email</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead><tbody>
+            @{
+                List<EmpolyeeManagement.Models.Employee> employees = ViewBag.Employess;
+                
+                    foreach (var emp in employees)
+        {<tr>
+            <td><a href="@Url.Action("Details","Employee",new {empId=emp.EmployeeId})">@emp.FirstName @emp.LastName</a> </td>
+            
+            <td>@emp.Email</td>
+            <td><a class="btn btn-secondary" href="@Url.Action("Edit","Employee",new {empId=emp.EmployeeId})">Edit</a></td>
+                        @*<td><a class="btn btn-secondary" href="/Employee/Details/@emp.EmployeeId" >Edit</a></td>
+                        <td><a class="btn btn-secondary" href="/Employee/Delete/@emp.EmployeeId">Delete</a></td>*@
+            <td><a class="btn btn-danger" href="@Url.Action("Delete","Employee",new {empId=emp.EmployeeId})">Delete</a></td>
+            </tr>
+            
+           
+
+
+            @*string closebuttonToggle = "#collapse" + emp.EmployeeId;
+            string accordianId = "collapse" + emp.EmployeeId;
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target=@closebuttonToggle aria-expanded="true" aria-controls="collapseOne">
+                        <div class="d-flex" style="gap:10rem" >
+                        <h6>Name : @emp.FirstName @emp.LastName</h6>
+                     
+
+                        </div>
+                    </button>
+                </h2>
+                <div id="@accordianId" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body container">
+                        <div class="row">
+                        <div class="col-8 text-start">
+                        <strong>Email : @emp.Email</strong>
+                        </div>
+                        <div class="col-4">
+                        <button class="btn btn-secondary" >Edit</button>
+                                <button class="btn btn-secondary">Delete</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+                }
+         
+        
+        }
+           </tbody>
+        </table>
+
+        </div>
+    

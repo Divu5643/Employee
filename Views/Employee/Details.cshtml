@@ -1,0 +1,46 @@
+﻿
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+<h4>Employee Details</h4>
+<hr />
+<div class="container">
+    @{
+        EmpolyeeManagement.Models.Employee Employee = @ViewBag.Employee;
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Employee Details
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col">
+                            Name: <strong>@Employee.FirstName @Employee.LastName</strong>
+                        </div>
+                        <div class="col">
+                            Email:  <strong>@Employee.Email</strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            DOB: <strong>@Employee.DateOfBirth</strong>
+                        </div>
+
+                    </div>
+                    </div>
+            </div>
+        </div>
+        
+        
+        
+    }
+  
+</div>
+

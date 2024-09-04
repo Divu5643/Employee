@@ -1,0 +1,110 @@
+﻿@model EmpolyeeManagement.Models.Employee
+@{
+    ViewData["Title"] = "create";
+    ViewData["button1"] = "none";
+}
+
+<h1>Add An Employee</h1>
+
+<div class="container gap-3" >
+    @using (Html.BeginForm("Addemployee","Employee"))
+    {
+        List<EmpolyeeManagement.Models.Country> countryList = ViewBag.Countries;
+        List<EmpolyeeManagement.Models.State> stateList = ViewBag.States;
+        var SerializingSettings = new Newtonsoft.Json.JsonSerializerSettings{
+            ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        };
+
+
+
+        var listOfStates = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.States,SerializingSettings);
+        ViewBag.listOfStates = listOfStates;
+        DateTime today = DateTime.Now;
+        string maxDob = today.ToString("yyyy-MM-dd");
+
+
+        <div class="row my-3">
+            <div class="col">
+                @Html.LabelFor(m => m.FirstName, new { @class = "form-label" })
+                @Html.TextBoxFor(m=>m.FirstName, new{@id ="firstName",@class="form-control"})
+            </div>
+            <div class="col">
+                @Html.LabelFor(m => m.LastName, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.LastName, new { @id = "lastName", @class = "form-control" })
+            </div>
+
+        </div>
+        <div class="row my-3">
+            <div class="col">
+                @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Email, new { @id = "email", @class = "form-control" })
+                <div id="emailError" class=" alert-danger text-danger" ></div>
+            </div>
+            <div class="col">
+                @Html.LabelFor(m => m.DateOfBirth, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.DateOfBirth, new { @id = "dob",@type="date", @max = @today, @class = "form-control" })
+                <div id="dobError" class=" alert-danger text-danger"></div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col">
+                @Html.Label("Country")
+                @Html.DropDownListFor(m=>m.CountryId, countryList.Select(m=> new SelectListItem
+                {
+                Value =m.CountryId.ToString(),
+                Text = m.CountryName
+       }), new { @onchange = "form", @id = "countryDropDown", @class = "form-select" })
+
+            </div>
+            <div class="col">
+
+                 @Html.Label("State")
+                
+            @Html.DropDownListFor(m=>m.StateId, stateList.Select(m=> new SelectListItem
+           {
+               Value = m.StateId.ToString(),
+               Text = m.StateName
+       }), new { @id = "stateDropDown", @style = "display:none;", @class = "form-select" })
+                 
+            
+
+        </div>
+        </div>
+        <div class="row my-3">
+    <div class="col">
+                <Button type ="Submit" class="btn btn-primary">Submit form</Button>
+    </div>
+        </div>
+
+
+
+    }
+   
+      <script>
+        var myList = @Html.Raw(ViewBag.listOfStates);
+          var countryDropDown = document.querySelector("#countryDropDown");
+        var stateDropDown = document.querySelector("#stateDropDown");
+
+        countryDropDown.addEventListener("change",(event)=>{
+            var countryId = event.target.value;
+            var newStateList = myList.filter(state => { if (state.CountryId == countryId) { return state; } })
+           
+            stateDropDown.style.display = "inline";
+            
+            stateDropDown.innerHTML = "";
+
+            newStateList.forEach(listItem => {
+                console.log("List");
+                var opt = document.createElement("option");
+                opt.text = listItem.StateName;
+                opt.value = listItem.StateId;
+                stateDropDown.append(opt);
+            })
+            
+        })
+
+               
+                </script>
+   
+</div>
+
